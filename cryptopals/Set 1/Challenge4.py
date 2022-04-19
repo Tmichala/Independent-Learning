@@ -385,11 +385,14 @@ frequency_dict = {
 
 answer_dict = {}
 
+input_index = 0
+
 for input_hex in inputs_list:
     # hex to utf-8
     try:
-        text = bytes.fromhex(input_hex).decode('utf-8')
+        text = bytes.fromhex(input_hex).decode('ascii')
     except UnicodeDecodeError:
+        print("whoopsy daisy")
         continue
 
     # input hex to bytes
@@ -414,8 +417,10 @@ for input_hex in inputs_list:
             if character in frequency_dict:
                 char_u = character.upper()
                 score += frequency_dict[char_u]
-        answer_dict[f"{char} - {answer_string}"] = score
-        print(f"{char}: {answer_string} : {score}")
+        answer_dict[f"{input_index} -- {char} ^ {input_hex} = {answer_string}"] = score
+
+    input_index += 1
+    print(input_index)
 
 # print top 5 scores and keys
 print("Top 5 scores:")
