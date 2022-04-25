@@ -1,5 +1,4 @@
 # The hex-encoded string has been XOR'd against a single character. Find the key, decrypt the message.
-import base64
 from basic_functions import *
 import string
 

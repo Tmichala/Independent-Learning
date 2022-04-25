@@ -1,6 +1,7 @@
 import os
 from itertools import combinations
 import base64
+import string
 
 def generate_xor_key(key, length):
     """repeats a key to the desired length
@@ -31,6 +32,37 @@ def calculate_hamming_distance(data1, data2):
         dist += sum([1 for bit in bin(diff) if bit == '1'])
     return dist
 
+frequency_dict = {
+    'E': 56.88,
+    'A': 43.31,
+    'R': 38.64,
+    'I': 38.45,
+    'O': 36.51,
+    'T': 35.43,
+    'N': 33.92,
+    'S': 29.23,
+    'L': 27.98,
+    'C': 23.13,
+    'U': 18.51,
+    'D': 17.25,
+    'P': 16.14,
+    'M': 15.36,
+    'H': 15.31,
+    'G': 12.59,
+    'B': 10.56,
+    'F': 9.24,
+    'Y': 9.06,
+    'W': 6.57,
+    'K': 5.61,
+    'V': 5.13,
+    'X': 1.48,
+    'Z': 1.39,
+    'J': 1.00,
+    'Q': 0.98,
+    ' ': 20.00
+}
+
+
 os.chdir('cryptopals')
 
 keysize_differences = {}
@@ -51,17 +83,63 @@ with open('Set 1/Challenge6.txt', 'r') as input_file:
         # add the keysize and its difference to the dictionary
         keysize_differences[keysize] = keysize_difference
 
-print("(Keysize, Difference)")
+# print("(Keysize, Difference)")
 # print all keysizes and their differences, sorted by difference
 for keysize in sorted(keysize_differences.items(), key=lambda x: x[1]):
-    print(f'{keysize}')
+    # print(f'{keysize}')
+    pass
 
 # print keysizes with the lowest hamming distance
-print(f"Best candidates: {sorted(keysize_differences.items(), key=lambda x: x[1])[:10]}")
+# print(f"Best candidates: {sorted(keysize_differences.items(), key=lambda x: x[1])[:10]}")
 
 # print keysizes with the highest hamming distance
-print(f"Worst candidates: {sorted(keysize_differences.items(), key=lambda x: x[1], reverse=True)[:10]}")
+# print(f"Worst candidates: {sorted(keysize_differences.items(), key=lambda x: x[1], reverse=True)[:10]}")
 
 # pick shortest hamming distance for the keysize
 final_key_length = sorted(keysize_differences.items(), key=lambda x: x[1])[0][0]
-print(f"Final key length: {final_key_length}")
+# print(f"Final key length: {final_key_length}")
+
+# Make a block with all the first bytes from each block, up to the final key length
+blocks = []
+for i in range(0, final_key_length):
+    # get the first byte of each block
+    blocks.append(data[i::final_key_length])
+
+total_answer_guess = ''
+# Solve each block like a single byte xor
+for block in blocks:
+    # get all ascii characters and punctuation
+    block_answer_dict = {}
+    possible_keys = list(string.printable)
+
+    for char in possible_keys:
+        # key to bytes
+        key = generate_xor_key(char, len(block))
+        key_bytes = bytes(key, 'utf-8')
+        answer = xor_byte(key_bytes, block)
+        
+        # convert answer to string
+        answer_string = answer.decode('utf-8')
+
+        # calculate score
+        score = 0
+        for character in answer_string.upper():
+            if character in frequency_dict:
+                char_u = character.upper()
+                score += frequency_dict[char_u]
+        block_answer_dict[f"{char}"] = round(score, 3)
+    # Get key with highest value from dict and make it the answer
+    answer = sorted(block_answer_dict.items(), key=lambda x: x[1], reverse=True)[0][0]
+    total_answer_guess += answer
+
+# XOR whole message using total_answer_guess
+print(f"key\n\n{total_answer_guess}")
+key = generate_xor_key(total_answer_guess, len(data))
+key_bytes = bytes(key, 'utf-8')
+answer = xor_byte(key_bytes, data)
+print(f"answer\n\n{answer.decode('utf-8')}")
+
+# Also output to challenge6_answer.txt
+with open('Set 1/Challenge6_answer.txt', 'w') as output_file:
+    output_file.write(f"key\n{total_answer_guess}\n\n")
+    output_file.write(f"answer\n{answer.decode('utf-8')}")
