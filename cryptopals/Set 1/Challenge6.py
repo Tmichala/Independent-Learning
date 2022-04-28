@@ -202,4 +202,4 @@ frequency_dict = {
 
 # Using gradio for frontend
 iface = gr.Interface(fn=xor_cracker_from_b64, inputs="text", outputs="text")
-iface.launch(share=True)
+iface.launch(share=False)
