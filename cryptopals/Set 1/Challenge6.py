@@ -203,3 +203,6 @@ def __main__():
     # Using gradio for frontend
     iface = gr.Interface(fn=xor_cracker_from_b64, inputs="text", outputs="text")
     iface.launch(share=False, server_port=7860, server_name="0.0.0.0")
+
+if __name__ == "__main__":
+    __main__()
