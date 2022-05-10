@@ -1,0 +1,48 @@
+
+name                       
+----                       
+Domain Users               
+MOMusers                   
+HUS Server-Manager         
+HUS-WSAdmin                
+HUS-AllUsers               
+HUS OU-Manager             
+HUS-Sales                  
+HUS Computeraccount-Manager
+CTX_MOM                    
+HUS EPO_Admin              
+HUS_SAPLGPAD_New           
+HUS-FW-SAP                 
+HUS-FW-Admin               
+HUS-FW-Home                
+HUS-FW-Mobile              
+WT_User                    
+HUS_InternetWebUsers       
+HMX_LAWin7Control          
+HUS_LAWin7Control          
+DHCP Administrators        
+XEN-APP-SCCM-ConfigMgmt    
+HUS Exchange Admins        
+WSADMIN HMX                
+HUSDOM-InternetVIPUsers    
+SpiderController           
+HUS_SCCM_Deployment_HD     
+HNT_MBAM_Advhelpdesk       
+HNT_MBAM_Helpdesk          
+Intranet_HUS_Users         
+XEN-APP-Adminserver        
+HMX_LAWin10Control         
+HUS_LAWin10Control         
+Intranet_HUS_Editors       
+HUS VMAdmin                
+HUS-IT                     
+WSAdmin HUS                
+nexthink_hus_local         
+HUS FileServerAdmin        
+HUS_IT_Admins              
+HUS Server-RemoteLogin     
+HUS-IT_Accounts            
+HUS-FW-UserCert            
+HUS_Sage_HRMS_Users        
+HMX_InternetVIP            
+HUS_VRTX-Admin       
